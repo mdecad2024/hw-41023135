@@ -13,9 +13,8 @@
 <p style="padding-left: 30px;">以 "學號@nfu.edu.tw" 登入 <a href="https://login.microsoftonline.com/">https://login.microsoftonline.com/</a> Office 365</p>
 <p style="padding-left: 30px;">Teams 團隊代碼: <span class="fui-Text ___vec8h90 fk6fouc f1pbo8a8 f1i3iumi figsok6 fpgzoln f1w7gpdv f6juhto f1mtd64y f1y7q3j9 f2jf649 foxqkq2" data-tid="join-team-code">j19kw75</span></p>
 <p>個人倉儲:<a href="https://github.com/mdecad2024/hw-41023135">https://github.com/mdecad2024/hw-41023135</a> </p>
-<p>個人網站:</p>
-<p>其他資訊</p>
-<h1>上課過程</h1>
+<p>個人網站:<a href="https://mdecad2024.github.io/hw-41023135/content/index.html">https://mdecad2024.github.io/hw-41023135/content/index.html</a> </p>
+<p>其他資訊</p><h1>上課過程</h1>
 <p>主要是編輯上課(後)留在教室時教授上課的內容&amp;上課做的事情，目的是為了證明有來上課&amp;有跟著教授做。</p>
 <p>也會補上課後回家的東西，占比不多，實作物品大多留在可攜裡。</p><h2>0913</h2>
 <p><img alt="" height="191" src="/images/螢幕擷取畫面 2024-09-20 135023.png" width="426"/></p>
@@ -122,10 +121,87 @@
 <p>在<a href="https://mdecad2024.github.io/hw-41023135/content/w10">w10</a>隨堂考，</p>
 <h2>1129</h2>
 <p>上週頒布了w11_ch的作業但我沒注意到，這周上課nx出問題重新裝一次bat檔，</p>
-<h2>1206</h2><h1>Attendance</h1>
+<h2>1206</h2>
+<p>上課時在畫兩個NX檔</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/h9rxTcQEL1k" width="560"></iframe></p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/290MjblPZGA" width="560"></iframe></p><h1>Attendance</h1>
 <p>出席 (10%) - 自行舉證評分</p>
 <p>自行利用 Github commits 提交記錄評分.</p>
-<h1>w11_ch</h1><h1>HW1</h1>
+<h1>w11_ch</h1>
+<p></p>
+<script src="/static/jsc3d.js" type="text/javascript"></script>
+<div id="models"><canvas height="300" id="cv1" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv2" style="border: 1px solid;" width="400"></canvas> <!-- 可以添加更多的 canvas --></div>
+<div style="width: 400px; height: 70px; border: 1px solid;">Model Color:<input id="mdlClr" onchange="changeOption('ModelColor',this.value)" style="margin-right: 50px;" type="color" value="#00ff40"/> Back Color1:<input id="bckClr1" onchange="changeOption('BackgroundColor1',this.value)" style="margin-right: 50px;" type="color"/> Back Color2:<input id="bckClr2" onchange="changeOption('BackgroundColor2',this.value)" type="color"/><br/> Render Mode:<select id="render" onchange="changeOption('RenderMode',this.value)">
+<option>Flat</option>
+<option>Point</option>
+<option>Wireframe</option>
+<option>Smooth</option>
+</select>Definition:<select id="defini" onchange="changeOption('Definition',this.value)">
+<option>Standard</option>
+<option>low</option>
+<option>high</option>
+</select></div>
+<script type="text/javascript">
+var viewers = [];
+
+function getOptions(){
+    var mc = document.getElementById("mdlClr").value;
+    var bc1 = document.getElementById("bckClr1").value;
+    var bc2 = document.getElementById("bckClr2").value;
+    var ren = document.getElementById("render").value;
+    var def = document.getElementById("defini").value;
+    return {ModelColor: mc, BackgroundColor1: bc1, BackgroundColor2: bc2, RenderMode: ren, Definition: def};
+}
+
+function readSTLfile(opt, canvasId){
+    var canvas = document.getElementById(canvasId);
+    var viewer = new JSC3D.Viewer(canvas);
+    viewer.setParameter('SceneUrl', opt.SceneUrl);
+    viewer.setParameter('InitRotationX', 0);
+    viewer.setParameter('InitRotationY', 0);
+    viewer.setParameter('InitRotationZ', 0);
+    viewer.setParameter('ModelColor', opt.ModelColor);
+    viewer.setParameter('BackgroundColor1', opt.BackgroundColor1);
+    viewer.setParameter('BackgroundColor2', opt.BackgroundColor2);
+    viewer.setParameter('RenderMode', opt.RenderMode);
+    viewer.setParameter('Definition', opt.Definition);
+    viewer.init();
+    viewer.update();
+    viewers.push(viewer); // 保存 viewer 實例
+}
+
+function changeOption(strOpt,strValue){
+    console.log("change " + strOpt + " to " + strValue);
+    viewers.forEach(viewer => {
+        viewer.setParameter(strOpt, strValue);
+        viewer.init();
+        viewer.update();
+    });
+}
+
+function openByUrl(){
+    var url = document.getElementById("url").value;
+    var opt = getOptions();
+    opt.SceneUrl = url;
+    // 可以添加更多的 STL URL
+    readSTLfile(opt, 'cv1'); // 為每個 canvas 調用
+    readSTLfile(opt, 'cv2'); // 第二個 canvas
+}
+
+function openByGet(){
+    var urls = [
+        "https://s104.cycu.org/~41023135/1018.stl",
+        "https://s104.cycu.org/~41023135/w11-1.stl"
+    ];
+    var opt = getOptions();
+    urls.forEach((url, index) => {
+        opt.SceneUrl = url;
+        readSTLfile(opt, 'cv' + (index + 1)); // 動態生成 canvas ID
+    });
+}
+
+openByGet();
+</script><h1>HW1</h1>
 <p>Homework 1 (10%):</p>
 <p style="padding-left: 30px;">利用 Solvespace 與 NX2312 建立 <a href="https://mde.tw/cad2024/content/Parts.html">Parts</a> 頁面中的零件</p>
 <p style="padding-left: 30px;">其他<a href="http://229.cycu.org/part_modeling_projects.pdf">零件模擬練習</a></p>
@@ -275,8 +351,8 @@ function openByUrl(){
 
 function openByGet(){
     var urls = [
-        "https://s104.cycu.org/~pj2023/cad2024_part_ex1_solvespace.stl",
-        "https://s104.cycu.org/~scrum1/41223199_part99.stl"
+        "https://s104.cycu.org/~41023135/1018.stl",
+        "https://s104.cycu.org/~41023135/1018-2.stl"
     ];
     var opt = getOptions();
     urls.forEach((url, index) => {
